@@ -1,10 +1,64 @@
 import { useState } from "react";
+import axios from "axios";
+import { USER_API_ENDPOINT } from "../utils/constant";
 
 const Login = () => {
   const [login, setIsLogin] = useState(true);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
+
   const loginSignupHandler = () => {
     setIsLogin(!login);
   };
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    if (login) {
+      // logic for login
+      try {
+        const res = await axios.post(
+          `${USER_API_ENDPOINT}login`,
+          {
+            email,
+            password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("RESPONSE", res);
+      } catch (error) {
+        console.log("ERRROR", error);
+      }
+    } else {
+      // logic for signup
+      try {
+        const res = await axios.post(
+          `${USER_API_ENDPOINT}register`,
+          {
+            name,
+            email,
+            username,
+            password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log("RESPONSE", res);
+      } catch (error) {
+        console.log("ERRROR", error);
+      }
+    }
+    console.log("State", name, email, username, password);
+  };
+
   return (
     <div
       id="login-parent"
@@ -26,16 +80,20 @@ const Login = () => {
           <h1 className="mt-4 text-2xl  font-bold">
             {login ? "Login" : "Register"}
           </h1>
-          <form action="" className="flex flex-col">
+          <form action="" onSubmit={submitHandler} className="flex flex-col">
             {!login && (
               <>
                 <input
                   type="text"
                   placeholder="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="outline-blue-500 border border-gray-800 px-3 py-1 rounded-full my- font-semibold"
                 />
                 <input
                   type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   placeholder="Username"
                   className="outline-blue-500 border border-gray-800 px-3 py-1 rounded-full my-1 font-semibold"
                 />
@@ -43,17 +101,21 @@ const Login = () => {
             )}
 
             <input
-              type="text"
+              type="email"
               placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="outline-blue-500 border border-gray-800 px-3 py-1 rounded-full my-1 font-semibold"
             />
             <input
-              type="text"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
               className="outline-blue-500 border border-gray-800 px-3 py-1 rounded-full my-1 font-semibold"
             />
             <button className="bg-[#1D9Bf0] border-none rounded-full py-2 my-4 text-lg text-white">
-              Login
+              {login ? " Login" : " Register"}
             </button>
             <h1>
               {login ? "Don't have an Account?" : "Already Have a Account?"}
