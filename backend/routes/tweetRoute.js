@@ -11,7 +11,7 @@ import { isAuthenticated } from "../config/auth.js";
 const router = express.Router();
 
 router.route("/create").post(isAuthenticated, createTweet);
-router.route("/delete/:id").delete(isAuthenticated, deleteTweet);
+router.route("/delete/:id").delete(deleteTweet);
 router.route("/like/:id").put(isAuthenticated, likeOrdislike);
 router.route("/getalltweet/:id").get(isAuthenticated, getAllTweets);
 router

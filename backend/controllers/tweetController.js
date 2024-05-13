@@ -11,9 +11,11 @@ export const createTweet = async (req, res) => {
         success: false,
       });
     }
+    const user = await User.findById(id).select("-password");
     await Tweet.create({
       description,
       userId: id,
+      userDetails: user,
     });
     return res.status(200).json({
       message: "Tweet created successfully",
@@ -48,7 +50,8 @@ export const likeOrdislike = async (req, res) => {
         $pull: { like: loggegInUserId },
       });
       return res.status(200).json({
-        message: "User disliked your tweet",
+        message: "you disliked the tweet",
+        success: true,
       });
     } else {
       await Tweet.findByIdAndUpdate(tweetId, {
@@ -56,7 +59,8 @@ export const likeOrdislike = async (req, res) => {
       });
 
       return res.status(200).json({
-        message: "User liked your tweet",
+        message: "You liked the tweet",
+        success: true,
       });
     }
   } catch (error) {
@@ -75,7 +79,7 @@ export const getAllTweets = async (req, res) => {
       })
     );
     return res.status(200).json({
-      tweets: loggedInUserTweets.concat(followingUserTweet),
+      tweets: loggedInUserTweets.concat(followingUserTweet[0]),
     });
   } catch (error) {
     console.log(error);

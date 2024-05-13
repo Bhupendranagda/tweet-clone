@@ -1,8 +1,15 @@
 import Avatar from "react-avatar";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import useGetProfile from "../hooks/useGetProfile";
 
 const Profile = () => {
+  const { user, profile } = useSelector((store) => store.user);
+  // custom hooks
+  const { id } = useParams();
+  useGetProfile(id);
+  const followUnfollowHandler = () => {};
   return (
     <div id="parent-div" className="w-[50%] border-l border-r border-gray-200">
       <div className="w-full">
@@ -14,7 +21,7 @@ const Profile = () => {
             <IoIosArrowRoundBack size={"24px"} />
           </Link>
           <div className="ml-2">
-            <h1 className="font-bold text-lg">Honey</h1>
+            <h1 className="font-bold text-lg">{profile?.name}</h1>
             <p className="text-sm text-gray-500 ">10 posts</p>
           </div>
         </div>
@@ -31,13 +38,22 @@ const Profile = () => {
           />
         </div>
         <div className="text-right mt-4">
-          <button className="px-4 py-1 rounded-full text-right border border-gray-400">
-            Edit profile
-          </button>
+          {profile?._id === user?._id ? (
+            <button className="px-4 py-1 rounded-full text-right border border-gray-400">
+              Edit Profile
+            </button>
+          ) : (
+            <button
+              onClick={followUnfollowHandler}
+              className="px-4 py-1  text-white rounded-full text-right border border-gray-400 bg-black "
+            >
+              {user.following.includes(id) ? "Following" : "Follow"}
+            </button>
+          )}
         </div>
         <div className="m-4 mt-6">
-          <h1 className="text-xl font-bold">Bhupendra Nagda</h1>
-          <p>@bhupendra99</p>
+          <h1 className="text-xl font-bold">{profile?.name}</h1>
+          <p>@{profile?.username}</p>
         </div>
         <div className="m-4 text-sm">
           <p>

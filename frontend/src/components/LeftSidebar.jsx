@@ -5,8 +5,11 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import { CiBookmark } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import { useDebugValue } from "react";
+import { useSelector } from "react-redux";
 
 const LeftSidebar = () => {
+  const { user } = useSelector((store) => store.user);
   return (
     <div className="w-[20%]">
       <div id="parent-div" className="bg-fuchsia-200">
@@ -48,7 +51,7 @@ const LeftSidebar = () => {
             <h1 className="font-bold text-lg ml-2">Notification</h1>
           </div>
           <Link
-            to={"/profile"}
+            to={`/profile/${user?._id}`}
             className="flex items-center my-2 px-4 py-2 rounded-full
            hover:bg-gray-200 hover:cursor-pointer"
           >

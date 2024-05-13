@@ -18,7 +18,7 @@ router.route("/login").post(Login);
 router.route("/logout").get(logout);
 router.route("/bookmark/:id").put(isAuthenticated, bookmarks);
 router.route("/profile/:id").get(isAuthenticated, getMyProfile);
-router.route("/otheruser/:id").post(isAuthenticated, getOthersUsers);
+router.route("/otheruser/:id").get(isAuthenticated, getOthersUsers);
 router.route("/follow/:id").post(isAuthenticated, follow);
 router.route("/unfollow/:id").post(isAuthenticated, unfollow);
 

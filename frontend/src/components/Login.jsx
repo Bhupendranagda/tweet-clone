@@ -1,13 +1,18 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import { USER_API_ENDPOINT } from "../utils/constant";
-
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { getUser } from "../redux/userSlice";
 const Login = () => {
   const [login, setIsLogin] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const loginSignupHandler = () => {
     setIsLogin(!login);
@@ -28,11 +33,16 @@ const Login = () => {
             headers: {
               "Content-Type": "application/json",
             },
+            withCredentials: true,
           }
         );
-        console.log("RESPONSE", res);
+        dispatch(getUser(res?.data?.user));
+        if (res.data.success) {
+          navigate("/");
+          toast.success(res.data.message);
+        }
       } catch (error) {
-        console.log("ERRROR", error);
+        toast.success(error.response.data.message);
       }
     } else {
       // logic for signup
@@ -49,11 +59,15 @@ const Login = () => {
             headers: {
               "Content-Type": "application/json",
             },
+            withCredentials: true,
           }
         );
-        console.log("RESPONSE", res);
+        if (res.data.success) {
+          toast.success(res.data.message);
+          setIsLogin(true);
+        }
       } catch (error) {
-        console.log("ERRROR", error);
+        toast.success(error.response.data.message);
       }
     }
     console.log("State", name, email, username, password);

@@ -15,7 +15,7 @@ const Body = () => {
           element: <Feed />,
         },
         {
-          path: "/profile",
+          path: "/profile/:id",
           element: <Profile />,
         },
       ],
@@ -24,10 +24,6 @@ const Body = () => {
       path: "/login",
       element: <Login />,
     },
-    // {
-    //   path: "/",
-    //   element: <Login />,
-    // },
   ]);
   return (
     <div>
