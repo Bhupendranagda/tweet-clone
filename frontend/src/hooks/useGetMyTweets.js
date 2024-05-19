@@ -13,6 +13,7 @@ const useGetMyTweets = (id) => {
       const res = await axios.get(`${TWEET_API_ENDPOINT}getalltweet/${id}`, {
         withCredentials: true,
       });
+      console.log("I KNOW TWEWWET",res)
       dispath(getAllTweets(res.data.tweets));
     } catch (error) {
       console.log(error);

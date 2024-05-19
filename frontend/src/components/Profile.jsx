@@ -1,15 +1,59 @@
 import Avatar from "react-avatar";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { Link, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useGetProfile from "../hooks/useGetProfile";
+import axios from "axios";
+import { USER_API_ENDPOINT } from "../utils/constant";
+import { toast } from "react-hot-toast";
+import { followingUpdate } from "../redux/userSlice";
+import { getRefresh } from "../redux/tweetSlice";
 
 const Profile = () => {
   const { user, profile } = useSelector((store) => store.user);
   // custom hooks
   const { id } = useParams();
   useGetProfile(id);
-  const followUnfollowHandler = () => {};
+  const dispatch  =useDispatch()
+
+  const followUnfollowHandler = async () => {
+    if (user.following.includes(id)) {
+      // unfollow
+      try {
+        const res = await axios.post(
+          `${USER_API_ENDPOINT}unfollow/${id}`,
+          {
+            id: user?._id,
+          },
+          { withCredentials: true }
+        );
+        dispatch(followingUpdate(id));
+        dispatch(getRefresh())
+        toast.success(res.data.message);
+      } catch (error) {
+        console.log("error", error);
+        toast.error(error.response.data.message);
+      }
+    } else {
+      // follow
+      try {
+        const res = await axios.post(
+          `${USER_API_ENDPOINT}follow/${id}`,
+          {
+            id: user?._id,
+          },
+          { withCredentials: true }
+        );
+        console.log("Follow id ", id)
+        dispatch(followingUpdate(id));
+        dispatch(getRefresh())
+        toast.success(res.data.message);
+      } catch (error) {
+        console.log("error", error);
+        toast.error(error.response.data.message);
+      }
+    }
+  };
   return (
     <div id="parent-div" className="w-[50%] border-l border-r border-gray-200">
       <div className="w-full">
@@ -47,7 +91,7 @@ const Profile = () => {
               onClick={followUnfollowHandler}
               className="px-4 py-1  text-white rounded-full text-right border border-gray-400 bg-black "
             >
-              {user.following.includes(id) ? "Following" : "Follow"}
+              {user.following.includes(id) ? "Unflow" : "Follow"}
             </button>
           )}
         </div>
