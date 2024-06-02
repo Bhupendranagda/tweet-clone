@@ -1,5 +1,9 @@
 # Twitter Clone
-https://www.loom.com/share/97be415275174593bda395d1d250f718?sid=ad3b1a43-95ea-4996-9d9e-6f0049d3dc26
+
+
+https://github.com/Bhupendranagda/tweet-clone/assets/60057376/7aff3a4b-a771-4b3d-9f39-356b7cdcc153
+
+
 ## Overview
 This is my first fullstack web application. I've used MongoDB as a database, ReactJS for the frontend, ExpressJS for the backend, and Redux for global state management. Follow the guide below to install the application on your desktop and run it locally. If you want to contribute to this project, please fork the repository.
 
