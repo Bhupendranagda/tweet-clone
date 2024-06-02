@@ -83,7 +83,7 @@ const Login = () => {
           <img
             className="ml-5"
             width={"180px"}
-            src="https://i.pinimg.com/originals/99/65/5e/99655e9fe24eb0a7ea38de683cedb735.jpg"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpevfm2P0BtgC9LbXH1n2Xp-oR-iLX8xQTBg&usqp=CAU"
             alt="twitte-logo"
           />
         </div>

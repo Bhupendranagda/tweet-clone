@@ -4,15 +4,34 @@ import { CiUser } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import { CiBookmark } from "react-icons/ci";
-import { Link } from "react-router-dom";
-import { useDebugValue } from "react";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { USER_API_ENDPOINT } from "../utils/constant";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { getMyProfile, getOtherUsers, getUser } from "../redux/userSlice";
 
 const LeftSidebar = () => {
   const { user } = useSelector((store) => store.user);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const logoutHandler = async() =>{
+    try {
+      const res = await axios.get(`${USER_API_ENDPOINT}logout`)
+      toast.success(res.data.message)
+      dispatch(getUser(null))
+      dispatch(getOtherUsers(null))
+      dispatch(getMyProfile(null))
+      navigate('/login')
+    } catch (error) {
+      console.log("ERROR",error)
+      toast.error(error.response.data.message)
+    }
+  }
+
   return (
     <div className="w-[20%]">
-      <div id="parent-div" className="bg-fuchsia-200">
+      <div id="parent-div" >
         <div id="image-div">
           <img
             className="ml-4"
@@ -72,6 +91,7 @@ const LeftSidebar = () => {
           <div
             className="flex items-center my-2 px-4 py-2 rounded-full
            hover:bg-gray-200 hover:cursor-pointer"
+           onClick={logoutHandler}
           >
             <div>
               <IoIosLogOut size={"24px"} />

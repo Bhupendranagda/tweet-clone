@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const RightSidebar = ({ otherUsers }) => {
   return (
-    <div className="bg-emerald-300 w-[25%]">
+    <div className="  w-[25%]">
       <div className=" flex items-center rounded-full bg-gray-100 mt-1">
         <CiSearch size={"25px"} className="ml-1 cursor-pointer" />
         <input
