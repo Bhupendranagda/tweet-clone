@@ -73,7 +73,14 @@ The app is ready to go. Check the localhost with the port that you set for `PORT
 
 ## Contributing 🙌
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
+## InProgress Development
+- Comments
+- SSO
+- Search bar
+- Loggers
+- Jest
 ---
 
 Happy coding! 🎉
+
+
